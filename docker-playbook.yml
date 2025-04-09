@@ -1,6 +1,6 @@
 ---
 - name: building the docker images
-  hosts: node2 
+  hosts: node1
   become: true 
   tasks:
     
