@@ -9,7 +9,7 @@
   tasks:
 
     - name: login in to docker hub
-      commity.docker.docker_login:
+      community.docker.docker_login:
         username: "{{docker_user}}"
         password: "{{docker_password}}"
 
