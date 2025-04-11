@@ -3,28 +3,34 @@
   hosts: node2
   become: true 
   tasks:
-    
-   
 
-    - name: remove the present image 
-      docker_image:
-        name: mysql
-        state: absent
+
+
     - name: pull the docker image from docker hub
       docker_image:
         name: mysql
         source: pull
-        state: present  
+        state: present
+
+    - name: remove the present image
+      docker_image:
+        name: mysql
+        state: absent
+
     - name: run the MySQL image 
       docker_container:
-        name: mydb
-        image: mysql
+        name: myhtp
+        image: httpd
         state: started  
         restart_policy: always  
         ports:
-          - "7070:3306"
+          - "7070:80"
         env:
-          MYSQL_ROOT_PASSWORD: my-secret-pw
+          HTTPD__DocumentRoot: /var/www/public
+          HTTPD__ServerAdmin: webmaster@example.org
+          HTTPD__AddDefaultCharset: UTF-8
+          HTTPD_a2enmod: rewrite status expires
+         
     - name: install webserver
       docker_container:
         name: webserver

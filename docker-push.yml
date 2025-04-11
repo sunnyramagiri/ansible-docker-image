@@ -1,0 +1,19 @@
+---
+- name: push to docker hun
+  hosts: node2
+  become: true
+  vars:
+    docker_user: sunnyramagiri
+    docker_password: sarika.r@12
+    image_name: httpd
+  tasks:
+
+    - name: login in to docker hub
+      commity.docker.docker_login:
+        username: "{{docker_user}}"
+        password: "{{docker_password}}"
+
+    - name: push the image 
+      community.docker.docker_image:
+        name: "{{ image_name }}"
+        push: true
