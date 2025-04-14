@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    stages{
+        stage('git download') {
+            steps {
+                git 'https://github.com/sunnyramagiri/ansible-docker-image.git'
+            }
+        }
+        stage('ansbile') {
+            steps {
+                sh 'docker build -t sunnyramagiri/httpd .'
+            }
+        }
+        stage('dockerpush') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-ansible', toolName: 'docker') {
+                        sh 'docker push sunnyramagiri/httpd'
+                    }
+                }
+            }
+        }
+    }
+}
